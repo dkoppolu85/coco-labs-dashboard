@@ -1,0 +1,65 @@
+{
+  "last_updated": "2025-04-30T00:00:00",
+  "events": [
+    {
+      "Timeline": "Pre-Summit",
+      "Chapter Name": "Bay Area",
+      "Chapter Leader": "TBD",
+      "Snowflake SE PoC": "Okhtay Azarmanesh",
+      "Marketo Email Blast - 1": "May 5",
+      "Marketo Email Blast - 2": "May 12",
+      "Bevy Email Blast": "April 30",
+      "Date of Event": "May 14",
+      "Venue": "SVAI Hub, Menlo Park",
+      "Reg link": "https://luma.com/i78wufyv",
+      "Registrations": 29,
+      "Attendance": null,
+      "Feedback": null
+    },
+    {
+      "Timeline": "Pre-Summit",
+      "Chapter Name": "Toronto",
+      "Chapter Leader": "Augusto Rosa",
+      "Snowflake SE PoC": "Oliver Benning, Fred L'Anglais",
+      "Marketo Email Blast - 1": null,
+      "Marketo Email Blast - 2": null,
+      "Bevy Email Blast": null,
+      "Date of Event": "May 25 (tentative)",
+      "Venue": "TBD",
+      "Reg link": null,
+      "Registrations": null,
+      "Attendance": null,
+      "Feedback": null
+    },
+    {
+      "Timeline": "Pre-Summit",
+      "Chapter Name": "Dallas Fort-Worth",
+      "Chapter Leader": "Joyce Avila",
+      "Snowflake SE PoC": "Aran Sakzenian",
+      "Marketo Email Blast - 1": null,
+      "Marketo Email Blast - 2": null,
+      "Bevy Email Blast": null,
+      "Date of Event": "May 18 (tentative)",
+      "Venue": "TBD",
+      "Reg link": null,
+      "Registrations": null,
+      "Attendance": null,
+      "Feedback": null
+    },
+    {
+      "Timeline": "Pre-Summit",
+      "Chapter Name": "NYC",
+      "Chapter Leader": "Ajay Pathak",
+      "Snowflake SE PoC": "Haley Massa, Kaitlyn Wells, Andrew Samant",
+      "Marketo Email Blast - 1": null,
+      "Marketo Email Blast - 2": null,
+      "Bevy Email Blast": null,
+      "Date of Event": "TBD",
+      "Venue": "TBD",
+      "Reg link": null,
+      "Registrations": null,
+      "Attendance": null,
+      "Feedback": null
+    }
+  ]
+}
