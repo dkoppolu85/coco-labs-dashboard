@@ -1,10 +1,10 @@
 {
-  "last_updated": "2025-04-30T00:00:00",
+  "last_updated": "2025-05-05T10:00:00",
   "events": [
     {
       "Timeline": "Pre-Summit",
       "Chapter Name": "Bay Area",
-      "Chapter Leader": "TBD",
+      "Chapter Leader": "John Miller",
       "Snowflake SE PoC": "Okhtay Azarmanesh",
       "Marketo Email Blast - 1": "May 5",
       "Marketo Email Blast - 2": "May 12",
@@ -24,8 +24,8 @@
       "Marketo Email Blast - 1": null,
       "Marketo Email Blast - 2": null,
       "Bevy Email Blast": null,
-      "Date of Event": "May 25 (tentative)",
-      "Venue": "TBD",
+      "Date of Event": "May 28",
+      "Venue": "Snowflake Toronto Office",
       "Reg link": null,
       "Registrations": null,
       "Attendance": null,
@@ -54,7 +54,7 @@
       "Marketo Email Blast - 1": null,
       "Marketo Email Blast - 2": null,
       "Bevy Email Blast": null,
-      "Date of Event": "TBD",
+      "Date of Event": "May 26",
       "Venue": "TBD",
       "Reg link": null,
       "Registrations": null,
