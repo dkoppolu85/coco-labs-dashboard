@@ -13,7 +13,7 @@ st.set_page_config(
 )
 
 
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_events() -> tuple[pd.DataFrame, str]:
     with open(DATA_FILE) as f:
         raw = json.load(f)
