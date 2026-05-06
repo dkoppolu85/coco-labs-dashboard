@@ -152,20 +152,25 @@ st.divider()
 # ── Email Blast Schedule ──────────────────────────────────────────────────────
 st.markdown("### Email Blast Schedule")
 
+def safe_str(val) -> str:
+    if val is None or (isinstance(val, float) and pd.isna(val)):
+        return ""
+    return str(val).strip()
+
 email_rows = []
 for _, row in df.iterrows():
-    m1 = row.get("Marketo Email Blast - 1") or ""
-    m2 = row.get("Marketo Email Blast - 2") or ""
-    bevy = row.get("Bevy Email Blast") or ""
+    m1 = safe_str(row.get("Marketo Email Blast - 1"))
+    m2 = safe_str(row.get("Marketo Email Blast - 2"))
+    bevy = safe_str(row.get("Bevy Email Blast"))
 
     email_rows.append({
         "Chapter": row["Chapter Name"],
         "Event Date": row["event_date_clean"],
-        "Marketo Blast 1": str(m1).strip() if m1 else "—",
+        "Marketo Blast 1": m1 if m1 else "—",
         "Blast 1 Status": blast_badge(parse_blast_status(m1)),
-        "Marketo Blast 2": str(m2).strip() if m2 else "—",
+        "Marketo Blast 2": m2 if m2 else "—",
         "Blast 2 Status": blast_badge(parse_blast_status(m2)),
-        "Bevy Blast": str(bevy).strip() if bevy else "—",
+        "Bevy Blast": bevy if bevy else "—",
         "Bevy Status": blast_badge(parse_blast_status(bevy)),
     })
 
