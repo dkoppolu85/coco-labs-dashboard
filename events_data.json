@@ -1,5 +1,5 @@
 {
-  "last_updated": "2025-05-11T10:00:00",
+  "last_updated": "2025-05-11T11:30:00",
   "events": [
     {
       "Timeline": "Pre-Summit",
@@ -12,8 +12,7 @@
       "Registrations": 124,
       "Attendance": null,
       "CSTAT": null,
-      "Mkto Email 1": "May 5",
-      "Mkto Email 2": "May 12",
+      "Mkto Email": "May 5",
       "Bevy Email 1": "April 30",
       "Bevy Email 2": "May 7",
       "Trial Sign Up Link": "https://signup.snowflake.com/?trial=student&cloud=aws&region=us-west-2&utm_source=workshop&utm_campaign=northstar-2026&k=hol-snowflake-8569&t=13ac3329f97c70698fffbbeefd6f5caf81cdf1fef34e52b5d762221d57e81da5"
@@ -29,8 +28,7 @@
       "Registrations": 46,
       "Attendance": null,
       "CSTAT": null,
-      "Mkto Email 1": "5/12 requested",
-      "Mkto Email 2": "unlikely",
+      "Mkto Email": "5/12 requested",
       "Bevy Email 1": "May 7",
       "Bevy Email 2": null,
       "Trial Sign Up Link": "https://signup.snowflake.com/?trial=student&cloud=aws&region=us-west-2&utm_source=workshop&utm_campaign=northstar-2026&t=cc99a0e8b7276ab719813d2f5cd39852ccfb7b9550447e80a4977b4d80f071c9"
@@ -46,8 +44,7 @@
       "Registrations": 59,
       "Attendance": null,
       "CSTAT": null,
-      "Mkto Email 1": "5/18 requested",
-      "Mkto Email 2": "unlikely",
+      "Mkto Email": "5/18 requested",
       "Bevy Email 1": "May 6",
       "Bevy Email 2": "May 13",
       "Trial Sign Up Link": "https://signup.snowflake.com/?trial=student&cloud=aws&region=us-west-2&utm_source=workshop&utm_campaign=northstar-2026&t=5dd5f9e93802c5f3a7e248415101e4767bfe84efd720e8de1cb7b8c09b93e1b4"
@@ -63,8 +60,7 @@
       "Registrations": null,
       "Attendance": null,
       "CSTAT": null,
-      "Mkto Email 1": "5/19 requested",
-      "Mkto Email 2": "unlikely",
+      "Mkto Email": "5/19 requested",
       "Bevy Email 1": null,
       "Bevy Email 2": null,
       "Trial Sign Up Link": "https://signup.snowflake.com/?trial=student&cloud=aws&region=us-west-2&utm_source=workshop&utm_campaign=northstar-2026&t=74fd7a771f2eb4fafe44698afae2b5be6fbd35a4db2c52a6a2da574c30580bbb"
@@ -80,8 +76,7 @@
       "Registrations": 87,
       "Attendance": null,
       "CSTAT": null,
-      "Mkto Email 1": "5/20 requested",
-      "Mkto Email 2": "unlikely",
+      "Mkto Email": "5/20 requested",
       "Bevy Email 1": "May 6",
       "Bevy Email 2": null,
       "Trial Sign Up Link": "https://signup.snowflake.com/?trial=student&cloud=aws&region=us-west-2&utm_source=workshop&utm_campaign=northstar-2026&t=0764b3e3662ae900e9438a48b09b2f8ca72b828af9e638dbec5551f3d40e38ea"

@@ -165,22 +165,19 @@ st.markdown("### Email Blast Schedule")
 
 email_rows = []
 for _, row in df.iterrows():
-    m1 = safe_str(row.get("Mkto Email 1") or row.get("Marketo Email Blast - 1"))
-    m2 = safe_str(row.get("Mkto Email 2") or row.get("Marketo Email Blast - 2"))
+    mkto = safe_str(row.get("Mkto Email") or row.get("Mkto Email 1") or row.get("Marketo Email Blast - 1"))
     b1 = safe_str(row.get("Bevy Email 1") or row.get("Bevy Email Blast"))
     b2 = safe_str(row.get("Bevy Email 2"))
 
     email_rows.append({
         "Chapter": row["Chapter Name"],
         "Event Date": row["event_date_clean"],
-        "Mkto Email 1": m1 if m1 else "—",
-        "Status": blast_badge(parse_blast_status(m1)),
-        "Mkto Email 2": m2 if m2 else "—",
-        "Status ": blast_badge(parse_blast_status(m2)),
+        "Mkto Email": mkto if mkto else "—",
+        "Mkto Status": blast_badge(parse_blast_status(mkto)),
         "Bevy Email 1": b1 if b1 else "—",
-        "Status  ": blast_badge(parse_blast_status(b1)),
+        "Bevy 1 Status": blast_badge(parse_blast_status(b1)),
         "Bevy Email 2": b2 if b2 else "—",
-        "Status   ": blast_badge(parse_blast_status(b2)),
+        "Bevy 2 Status": blast_badge(parse_blast_status(b2)),
     })
 
 email_df = pd.DataFrame(email_rows)
