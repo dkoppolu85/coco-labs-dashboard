@@ -21,6 +21,12 @@ def load_events() -> tuple[pd.DataFrame, str]:
     return df, raw.get("last_updated", "unknown")
 
 
+def safe_str(val) -> str:
+    if val is None or (isinstance(val, float) and pd.isna(val)):
+        return ""
+    return str(val).strip()
+
+
 def parse_event_date(raw) -> tuple[str, str]:
     if not isinstance(raw, str) or raw.strip() == "" or raw.strip().upper() == "TBD":
         return "TBD", "tbd"
@@ -34,6 +40,10 @@ def parse_event_date(raw) -> tuple[str, str]:
 def parse_blast_status(raw, year: int = 2025) -> str:
     if not isinstance(raw, str) or raw.strip() == "":
         return "TBD"
+    if "requested" in raw.lower():
+        return "Requested"
+    if "unlikely" in raw.lower():
+        return "Unlikely"
     try:
         dt = datetime.strptime(f"{raw.strip()} {year}", "%B %d %Y")
         return "Sent" if dt.date() <= date.today() else "Upcoming"
@@ -53,8 +63,10 @@ def blast_badge(status: str) -> str:
     return {
         "Sent": "✓ Sent",
         "Upcoming": "⏳ Upcoming",
-        "TBD": "— TBD",
-    }.get(status, "— TBD")
+        "Requested": "📋 Requested",
+        "Unlikely": "✗ Unlikely",
+        "TBD": "—",
+    }.get(status, "—")
 
 
 # ── Header ────────────────────────────────────────────────────────────────────
@@ -72,14 +84,12 @@ try:
 except Exception:
     ts_str = last_updated
 
-st.caption(
-    f"Data last synced: **{ts_str}** · "
-    "To pull fresh data from Google Sheets, run: `python3 refresh_data.py`"
-)
+st.caption(f"Data last synced: **{ts_str}**")
 st.divider()
 
 # ── Derived columns ───────────────────────────────────────────────────────────
-df[["event_date_clean", "event_status"]] = df["Date of Event"].apply(
+date_col = "Event Date" if "Event Date" in df.columns else "Date of Event"
+df[["event_date_clean", "event_status"]] = df[date_col].apply(
     lambda x: pd.Series(parse_event_date(x))
 )
 df["registrations_int"] = pd.to_numeric(df["Registrations"], errors="coerce").fillna(0).astype(int)
@@ -90,8 +100,7 @@ total_events = len(df)
 confirmed_events = int((df["event_status"] == "confirmed").sum())
 total_regs = int(df["registrations_int"].sum())
 total_att = int(df["attendance_int"].sum())
-att_rate = (total_att / total_regs * 100) if total_regs > 0 else 0
-att_label = f"{total_att} ({att_rate:.0f}%)" if total_att > 0 else "Pending"
+att_label = f"{total_att} ({total_att / total_regs * 100:.0f}%)" if total_att > 0 else "Pending"
 
 with st.container(horizontal=True):
     st.metric("Total Events", total_events, border=True)
@@ -112,9 +121,9 @@ for i, (_, row) in enumerate(df.iterrows()):
             badge = status_badge(row["event_status"])
             st.markdown(f"**{row['Chapter Name']}** &nbsp; {badge}")
 
-            venue = row["Venue"] if isinstance(row["Venue"], str) and row["Venue"].strip() else "TBD"
-            leader = row["Chapter Leader"] if isinstance(row["Chapter Leader"], str) else "TBD"
-            poc = row["Snowflake SE PoC"] if isinstance(row["Snowflake SE PoC"], str) else "TBD"
+            venue = safe_str(row.get("Venue")) or "TBD"
+            leader = safe_str(row.get("Chapter Leader")) or "TBD"
+            poc = safe_str(row.get("Snowflake SE PoC")) or "TBD"
 
             c1, c2 = st.columns(2)
             with c1:
@@ -139,39 +148,39 @@ for i, (_, row) in enumerate(df.iterrows()):
             else:
                 st.markdown(":material/people: :gray[Registrations pending]")
 
-            reg_link = row.get("Reg link")
-            if isinstance(reg_link, str) and reg_link.strip().startswith("http"):
-                st.link_button(
-                    ":material/open_in_new: Registration Link",
-                    reg_link,
-                    use_container_width=True,
-                )
+            link_cols = st.columns(2)
+            reg_link = safe_str(row.get("Reg link"))
+            trial_link = safe_str(row.get("Trial Sign Up Link"))
+            with link_cols[0]:
+                if reg_link.startswith("http"):
+                    st.link_button(":material/open_in_new: Reg Link", reg_link, use_container_width=True)
+            with link_cols[1]:
+                if trial_link.startswith("http"):
+                    st.link_button(":material/science: Trial Link", trial_link, use_container_width=True)
 
 st.divider()
 
 # ── Email Blast Schedule ──────────────────────────────────────────────────────
 st.markdown("### Email Blast Schedule")
 
-def safe_str(val) -> str:
-    if val is None or (isinstance(val, float) and pd.isna(val)):
-        return ""
-    return str(val).strip()
-
 email_rows = []
 for _, row in df.iterrows():
-    m1 = safe_str(row.get("Marketo Email Blast - 1"))
-    m2 = safe_str(row.get("Marketo Email Blast - 2"))
-    bevy = safe_str(row.get("Bevy Email Blast"))
+    m1 = safe_str(row.get("Mkto Email 1") or row.get("Marketo Email Blast - 1"))
+    m2 = safe_str(row.get("Mkto Email 2") or row.get("Marketo Email Blast - 2"))
+    b1 = safe_str(row.get("Bevy Email 1") or row.get("Bevy Email Blast"))
+    b2 = safe_str(row.get("Bevy Email 2"))
 
     email_rows.append({
         "Chapter": row["Chapter Name"],
         "Event Date": row["event_date_clean"],
-        "Marketo Blast 1": m1 if m1 else "—",
-        "Blast 1 Status": blast_badge(parse_blast_status(m1)),
-        "Marketo Blast 2": m2 if m2 else "—",
-        "Blast 2 Status": blast_badge(parse_blast_status(m2)),
-        "Bevy Blast": bevy if bevy else "—",
-        "Bevy Status": blast_badge(parse_blast_status(bevy)),
+        "Mkto Email 1": m1 if m1 else "—",
+        "Status": blast_badge(parse_blast_status(m1)),
+        "Mkto Email 2": m2 if m2 else "—",
+        "Status ": blast_badge(parse_blast_status(m2)),
+        "Bevy Email 1": b1 if b1 else "—",
+        "Status  ": blast_badge(parse_blast_status(b1)),
+        "Bevy Email 2": b2 if b2 else "—",
+        "Status   ": blast_badge(parse_blast_status(b2)),
     })
 
 email_df = pd.DataFrame(email_rows)
@@ -180,16 +189,6 @@ st.dataframe(
     email_df,
     hide_index=True,
     use_container_width=True,
-    column_config={
-        "Chapter": st.column_config.TextColumn("Chapter", width="medium"),
-        "Event Date": st.column_config.TextColumn("Event Date", width="medium"),
-        "Marketo Blast 1": st.column_config.TextColumn("Marketo Blast 1", width="small"),
-        "Blast 1 Status": st.column_config.TextColumn("", width="small"),
-        "Marketo Blast 2": st.column_config.TextColumn("Marketo Blast 2", width="small"),
-        "Blast 2 Status": st.column_config.TextColumn("", width="small"),
-        "Bevy Blast": st.column_config.TextColumn("Bevy Blast", width="small"),
-        "Bevy Status": st.column_config.TextColumn("", width="small"),
-    },
 )
 
-st.caption("Blast status is derived from today's date. Run `python3 refresh_data.py` to sync latest data from Google Sheets.")
+st.caption("Status: ✓ Sent · ⏳ Upcoming · 📋 Requested · ✗ Unlikely")
