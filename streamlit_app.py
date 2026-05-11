@@ -123,7 +123,7 @@ for i, (_, row) in enumerate(df.iterrows()):
 
             venue = safe_str(row.get("Venue")) or "TBD"
             leader = safe_str(row.get("Chapter Leader")) or "TBD"
-            poc = safe_str(row.get("Snowflake SE PoC")) or "TBD"
+            poc = safe_str(row.get("Snowflake AFE/SE PoC") or row.get("Snowflake SE PoC")) or "TBD"
 
             c1, c2 = st.columns(2)
             with c1:
@@ -131,7 +131,7 @@ for i, (_, row) in enumerate(df.iterrows()):
                 st.markdown(f":material/location_on: **Venue:** {venue}")
             with c2:
                 st.markdown(f":material/person: **Chapter Lead:** {leader}")
-                st.markdown(f":material/badge: **SE POC:** {poc}")
+                st.markdown(f":material/badge: **AFE/SE POC:** {poc}")
 
             reg_count = row["registrations_int"]
             att_count = row["attendance_int"]
